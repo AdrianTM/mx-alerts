@@ -1,7 +1,9 @@
 #/bin/sh
+USERS=$(lslogins --noheadings -u -o user | grep -vw root)
 
-USER=$(logname)
-
-# add to user crontab
-(crontab -u $USER -l; echo '@hourly sleep $(( $(od -N2 -tu2 -An /dev/urandom) \% 1800 )); /usr/bin/mx-alerts.sh') | crontab -u $USER -
-
+# add to users crontab
+for USER in $USERS
+do
+  echo "user is: " $USER
+  (crontab -u $USER -l; echo '@hourly sleep $(( $(od -N2 -tu2 -An /dev/urandom) \% 1800 )); /usr/bin/mx-alerts.sh') | crontab -u $USER -
+done
