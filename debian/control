@@ -1,0 +1,17 @@
+Source: mx-alerts
+Section: admin
+Priority: optional
+Maintainer: Adrian <adrian@mxlinux.org>
+Build-Depends: debhelper (>=9.2), qt5-default, qttools5-dev-tools
+Standards-Version: 3.9.8
+
+Package: mx-alerts
+Architecture: any
+Depends: anacron,
+         cron,
+         gzip,
+         xdg-utils | mx-viewer,
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: MX Alerts
+ System tray program that displays alerts and urgent notifications from MX Linux team

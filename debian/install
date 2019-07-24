@@ -1,0 +1,7 @@
+images/mx-alerts.png	usr/share/icons/hicolor/48x48/apps
+license.html            usr/share/doc/mx-alerts
+mx-alerts		usr/bin
+mx-alerts.conf		etc
+mx-alerts.desktop	usr/share/applications
+mx-alerts.sh		usr/bin
+translations/*.qm	usr/share/mx-alerts/locale
