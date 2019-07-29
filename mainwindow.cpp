@@ -11,7 +11,6 @@ MainWindow::MainWindow(const QStringList& args) :
     timer = new QTimer(this);
     manager = new QNetworkAccessManager(this);
 
-    createComboChannel();
     createActions();
     loadSettings();
     createMenu();
@@ -68,16 +67,17 @@ void MainWindow::setIcon(QString icon_name)
     setWindowIcon(QIcon::fromTheme(icon_name));
 }
 
-bool MainWindow::showChannel(QString channel)
+bool MainWindow::showLastAlert()
 {
-    if (!verifySignature(channel)) {
+    if (!verifySignature()) {
         qDebug() << "Bad or missing signature";
-        QFile::remove(tmpFolder + channel);
-        QFile::remove(tmpFolder + channel + ".sig");
-        userSettings.remove("Last_" + channel);
+        QFile::remove(tmpFolder + "alert");
+        QFile::remove(tmpFolder + "alert.sig");
+        userSettings.remove("Last_alerts");
         return false;
     } else {
-        displayFile(channel);
+        setIcon("messagebox_critical");
+        displayFile("alert");
     }
     return true;
 }
@@ -86,7 +86,7 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason) {
     case QSystemTrayIcon::Trigger:
-        (alertIcon->icon().name() == "messagebox_info") ? showLastNews() : showLastAlert();
+        showLastAlert();
         break;
     case QSystemTrayIcon::DoubleClick:
         showNormal();
@@ -104,26 +104,16 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::loadSettings()
 {
     QSettings settings("/etc/mx-alerts.conf", QSettings::IniFormat);
-    notificationLevel = settings.value("NotificationLevel").toString().toLower();
     updateInterval = settings.value("UpdateInterval", "Hourly").toString().toLower();
     server = settings.value("Server").toString();
 
     // load user settings if present, otherwise use system settings
-    notificationLevel = userSettings.value("NotificationLevel", notificationLevel).toString().toLower();
     updateInterval = userSettings.value("UpdateInterval", updateInterval).toString().toLower();
     server = userSettings.value("Server", server).toString();
 
     qDebug() << "Server" << server;
-    qDebug() << "NotificationLevel" << notificationLevel;
     qDebug() << "Update interval" << updateInterval;
     setTimeout();
-    setChannel();
-}
-
-void MainWindow::setChannel()
-{
-    ui->combo_channel->setCurrentIndex((notificationLevel == "all") ? 1 : 0);
-    lastNewsAction->setVisible(notificationLevel == "all");
 }
 
 void MainWindow::setDisabled(bool disabled)
@@ -186,9 +176,9 @@ void MainWindow::setSchedule(QString newTiming)
 
 }
 
-void MainWindow::writeFile(QString channel, QString extension)
+void MainWindow::writeFile(QString extension)
 {
-    QFile file(tmpFolder + channel.toLower() + extension);
+    QFile file(tmpFolder + "alert" + extension);
     if (!file.open(QFile::WriteOnly)) {
         qDebug() << "Could not open file:" << file.fileName();
         QTimer::singleShot(0, qApp, &QGuiApplication::quit);
@@ -197,60 +187,33 @@ void MainWindow::writeFile(QString channel, QString extension)
     file.close();
 }
 
-void MainWindow::showLastAlert()
-{
-    showChannel("alert");
-}
-
-void MainWindow::showLastNews()
-{
-    showChannel("news");
-}
-
 void MainWindow::messageClicked()
 {
     QTimer::singleShot(0, qApp, &QGuiApplication::quit);
 }
 
 // check updates and return true if one channel has a notification
-bool MainWindow::checkChannel(QString channel)
+bool MainWindow::checkUpdates()
 {
-    qDebug() << "Check updates for" << channel;
-    QDateTime lastUpdate = userSettings.value("Last_" + channel).toDateTime();
-    qDebug() << "Last update for" << channel <<  lastUpdate;
-    if (!downloadFile(server + "/" + channel + ".sig")) return false;
+    QDateTime lastUpdate = userSettings.value("Last_alerts").toDateTime();
+    qDebug() << "Last update" <<  lastUpdate;
+    if (!downloadFile(server + "/" + "alert.sig")) return false;
     qDebug() << "Header time" << reply->header(QNetworkRequest::LastModifiedHeader).toDateTime();
     if (lastUpdate == reply->header(QNetworkRequest::LastModifiedHeader).toDateTime()) {
         qDebug() << "Already up-to-date";
         return false;
     }
-    writeFile(channel, ".sig");
-    userSettings.setValue("Last_" + channel, reply->header(QNetworkRequest::LastModifiedHeader).toDateTime());
-    if (!downloadFile(server + "/" + channel)) return false;
-    writeFile(channel);
+    writeFile(".sig");
+    userSettings.setValue("Last_alerts", reply->header(QNetworkRequest::LastModifiedHeader).toDateTime());
+    if (!downloadFile(server + "/alert")) return false;
+    writeFile();
 
-    return showChannel(channel);
+    return showLastAlert();
 }
 
-// check if alert and news present, give preference to alert (show only alert if present)
-bool MainWindow::checkUpdates()
+bool MainWindow::verifySignature()
 {
-    if (checkChannel("alert")) {
-        setIcon("messagebox_critical");
-        return true;
-    }
-    if (notificationLevel == "all") {
-        if (checkChannel("news")) {
-            setIcon("messagebox_info");
-            return true;
-        }
-    }
-    return false;
-}
-
-bool MainWindow::verifySignature(QString channel)
-{
-    return (getCmdOut("gpg --verify /var/tmp/mx-alerts/" + channel.toLower() + ".sig").exit_code == 0);
+    return (getCmdOut("gpg --verify /var/tmp/mx-alerts/alert.sig").exit_code == 0);
 }
 
 bool MainWindow::downloadFile(QUrl url)
@@ -300,14 +263,12 @@ void MainWindow::createActions()
     aboutAction = new QAction(QIcon::fromTheme("help-about"), tr("&About"), this);
     hideAction = new QAction(QIcon::fromTheme("exit"), tr("&Hide until new alerts"), this);
     lastAlertAction = new QAction(QIcon::fromTheme("messagebox_critical"), tr("&Show last alert"), this);
-    lastNewsAction = new QAction(QIcon::fromTheme("messagebox_info"), tr("&Show last news"), this);
     preferencesAction = new QAction(QIcon::fromTheme("settings"), tr("&Preferences"), this);
     quitAction = new QAction(QIcon::fromTheme("gtk-quit"), tr("&Quit"), this);
 
     connect(aboutAction, &QAction::triggered, this, &MainWindow::on_buttonAbout_clicked);
     connect(hideAction, &QAction::triggered, qApp, &QGuiApplication::quit);
     connect(lastAlertAction, &QAction::triggered, this, &MainWindow::showLastAlert);
-    connect(lastNewsAction, &QAction::triggered, this, &MainWindow::showLastNews);
     connect(preferencesAction, &QAction::triggered, this, &MainWindow::showNormal);
     connect(quitAction, &QAction::triggered, qApp, &QGuiApplication::quit);
 }
@@ -320,7 +281,6 @@ void MainWindow::createMenu()
     alertMenu->addAction(hideAction);
     alertMenu->addSeparator();
     alertMenu->addAction(lastAlertAction);
-    alertMenu->addAction(lastNewsAction);
     alertMenu->addSeparator();
     alertMenu->addAction(preferencesAction);
     alertMenu->addSeparator();
@@ -330,12 +290,6 @@ void MainWindow::createMenu()
 
     alertIcon = new QSystemTrayIcon(this);
     alertIcon->setContextMenu(alertMenu);
-}
-
-void MainWindow::createComboChannel()
-{
-    ui->combo_channel->addItem(QIcon::fromTheme("messagebox_critical"), "Only critical alerts");
-    ui->combo_channel->addItem(QIcon::fromTheme("messagebox_info"), "Alerts and news");
 }
 
 void MainWindow::on_buttonAbout_clicked()
@@ -379,9 +333,6 @@ void MainWindow::on_buttonApply_clicked()
 {
     setSchedule(ui->combo_interval->currentText());
     setTimeout();
-    notificationLevel = (ui->combo_channel->currentIndex() == 0) ? "critical" : "all";
-    userSettings.setValue("NotificationLevel", notificationLevel);
-    setChannel();
     setDisabled(ui->cb_disable->isChecked());
     close();
     QTimer::singleShot(0, qApp, &QGuiApplication::quit);

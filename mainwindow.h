@@ -39,33 +39,27 @@ private slots:
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
     void messageClicked();
     void setIcon(QString icon_name);
-    void showLastAlert();
-    void showLastNews();
     void on_buttonAbout_clicked();
     void on_buttonApply_clicked();
 
 private:
     Ui::MainWindow *ui;
 
-    bool checkChannel(QString channel);
     bool downloadFile(QUrl url);
-    bool showChannel(QString channel);
-    bool verifySignature(QString channel);
+    bool showLastAlert();
+    bool verifySignature();
 
     void displayFile(QString fileName);
     void createActions();
     void createMenu();
-    void createComboChannel();
     void csleep(int msec);
     void loadSettings();
-    void setChannel();
     void setDisabled(bool disabled);
     void setSchedule(QString newTiming);
     void setTimeout();
     void showMessage(QString title, QString body, QString fileName);
-    void writeFile(QString channel, QString extension = "");
+    void writeFile(QString extension = "");
 
-    QString notificationLevel;
     QString updateInterval;
     QString server;
     QString tmpFolder = "/var/tmp/mx-alerts/";
