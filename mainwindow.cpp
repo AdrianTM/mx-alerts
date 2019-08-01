@@ -5,7 +5,7 @@
 
 MainWindow::MainWindow(const QStringList& args) :
     ui(new Ui::MainWindow),
-    userSettings("MX-Linux", "mx-alerts")
+    userSettings("mx-alerts")
 {
     ui->setupUi(this);
     timer = new QTimer(this);
@@ -73,7 +73,7 @@ bool MainWindow::showLastAlert()
         qDebug() << "Bad or missing signature";
         QFile::remove(tmpFolder + "alert");
         QFile::remove(tmpFolder + "alert.sig");
-        userSettings.remove("Last_alerts");
+        userSettings.remove("LastAlert");
         return false;
     } else {
         setIcon("messagebox_critical");
@@ -135,8 +135,6 @@ void MainWindow::setTimeout()
         timeout = HOUR_M;
     } else if (updateInterval == "daily") {
         timeout = DAY_M;
-    } else if (updateInterval == "weekly") {
-        timeout = WEEK_M;
     } else {
         return;
     }
@@ -159,13 +157,9 @@ void MainWindow::setSchedule(QString newTiming)
 
     if (newTiming == "hourly") {
         getCmdOut("(crontab -l; echo '@hourly sleep $(( $(od -N1 -tuC -An /dev/urandom) \\% 30 ))m;/usr/bin/mx-alerts.sh')| crontab -");
-    } else if (newTiming == "daily") {
+    } else { // daily
         getCmdOut("mkdir -p ${HOME}/.mx-alerts/{etc,spool}");
         getCmdOut("echo '1 10 mx-alerts /usr/bin/mx-alerts.sh' > ${HOME}/.mx-alerts/anacrontab");
-        getCmdOut("(crontab -l; echo '@hourly /usr/sbin/anacron -s -t ${HOME}/.mx-alerts/anacrontab -S ${HOME}/.mx-alerts/spool')| crontab -");
-    } else { // weekly
-        getCmdOut("mkdir -p ${HOME}/.mx-alerts/{etc,spool}");
-        getCmdOut("echo '7 10 mx-alerts /usr/bin/mx-alerts.sh' > ${HOME}/.mx-alerts/anacrontab");
         getCmdOut("(crontab -l; echo '@hourly /usr/sbin/anacron -s -t ${HOME}/.mx-alerts/anacrontab -S ${HOME}/.mx-alerts/spool')| crontab -");
     }
 
@@ -195,7 +189,7 @@ void MainWindow::messageClicked()
 // check updates and return true if one channel has a notification
 bool MainWindow::checkUpdates()
 {
-    QDateTime lastUpdate = userSettings.value("Last_alerts").toDateTime();
+    QDateTime lastUpdate = userSettings.value("LastAlert").toDateTime();
     qDebug() << "Last update" <<  lastUpdate;
     if (!downloadFile(server + "/" + "alert.sig")) return false;
     qDebug() << "Header time" << reply->header(QNetworkRequest::LastModifiedHeader).toDateTime();
@@ -204,7 +198,7 @@ bool MainWindow::checkUpdates()
         return false;
     }
     writeFile(".sig");
-    userSettings.setValue("Last_alerts", reply->header(QNetworkRequest::LastModifiedHeader).toDateTime());
+    userSettings.setValue("LastAlert", reply->header(QNetworkRequest::LastModifiedHeader).toDateTime());
     if (!downloadFile(server + "/alert")) return false;
     writeFile();
 

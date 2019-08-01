@@ -24,7 +24,6 @@ struct Output {
 
 static int HOUR_M = 60 * 60 * 1000;
 static int DAY_M = HOUR_M * 24;
-static int WEEK_M = DAY_M * 7;
 
 class MainWindow : public QDialog
 {
