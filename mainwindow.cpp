@@ -1,13 +1,13 @@
 #include <QtGui>
+#include <QPushButton>
 #include <QTextEdit>
+#include <QVBoxLayout>
 
 #include "mainwindow.h"
 
 MainWindow::MainWindow(const QStringList& args) :
-    ui(new Ui::MainWindow),
     userSettings("mx-alerts")
 {
-    ui->setupUi(this);
     timer = new QTimer(this);
     manager = new QNetworkAccessManager(this);
 
@@ -104,70 +104,25 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::loadSettings()
 {
     QSettings settings("/etc/mx-alerts.conf", QSettings::IniFormat);
-    updateInterval = settings.value("UpdateInterval", "Hourly").toString().toLower();
     server = settings.value("Server").toString();
 
     // load user settings if present, otherwise use system settings
-    updateInterval = userSettings.value("UpdateInterval", updateInterval).toString().toLower();
     server = userSettings.value("Server", server).toString();
 
     qDebug() << "Server" << server;
-    qDebug() << "Update interval" << updateInterval;
-    setTimeout();
 }
 
-void MainWindow::setDisabled(bool disabled)
+void MainWindow::setDisabled()
 {
-    if (disabled) {
-        // remove entries user crontab
-        getCmdOut("crontab -l | sed '\\;/usr/bin/mx-alerts.sh;d'  | crontab -");
-        getCmdOut("crontab -l | sed '\\;${HOME}/.mx-alerts/anacrontab;d'  | crontab -");
-    } else {
-        setSchedule(ui->combo_interval->currentText());
-    }
-}
-
-void MainWindow::setTimeout()
-{
-    int timeout;
-    ui->combo_interval->setCurrentIndex(ui->combo_interval->findText(updateInterval, Qt::MatchFixedString));
-    if (updateInterval == "hourly") {
-        timeout = HOUR_M;
-    } else if (updateInterval == "daily") {
-        timeout = DAY_M;
-    } else {
-        return;
-    }
-    timer->start(timeout);
+    // remove entries user crontab
+    getCmdOut("crontab -l | sed '\\;/usr/bin/mx-alerts.sh;d'  | crontab -");
+    QTimer::singleShot(0, qApp, &QGuiApplication::quit);
 }
 
 void MainWindow::showMessage(QString title, QString body, QString fileName)
 {
     QSystemTrayIcon::MessageIcon icon = (fileName == "alert") ? QSystemTrayIcon::Critical : QSystemTrayIcon::Information;
     alertIcon->showMessage(title, body, icon, 0);
-}
-
-void MainWindow::setSchedule(QString newTiming)
-{
-    newTiming = newTiming.toLower();
-
-    // remove entries user crontab
-    getCmdOut("crontab -l | sed '\\;/usr/bin/mx-alerts.sh;d'  | crontab -");
-    getCmdOut("crontab -l | sed '\\;${HOME}/.mx-alerts/anacrontab;d'  | crontab -");
-
-    if (newTiming == "hourly") {
-        getCmdOut("(crontab -l; echo '@hourly sleep $(( $(od -N1 -tuC -An /dev/urandom) \\% 30 ))m;/usr/bin/mx-alerts.sh')| crontab -");
-    } else { // daily
-        getCmdOut("mkdir -p ${HOME}/.mx-alerts/{etc,spool}");
-        getCmdOut("echo '1 10 mx-alerts /usr/bin/mx-alerts.sh' > ${HOME}/.mx-alerts/anacrontab");
-        getCmdOut("(crontab -l; echo '@hourly /usr/sbin/anacron -s -t ${HOME}/.mx-alerts/anacrontab -S ${HOME}/.mx-alerts/spool')| crontab -");
-    }
-
-    // Save timeout setting
-    updateInterval = newTiming;
-    userSettings.setValue("UpdateInterval", updateInterval);
-    setTimeout();
-
 }
 
 void MainWindow::writeFile(QString extension)
@@ -257,13 +212,13 @@ void MainWindow::createActions()
     aboutAction = new QAction(QIcon::fromTheme("help-about"), tr("&About"), this);
     hideAction = new QAction(QIcon::fromTheme("exit"), tr("&Hide until new alerts"), this);
     lastAlertAction = new QAction(QIcon::fromTheme("messagebox_critical"), tr("&Show last alert"), this);
-    preferencesAction = new QAction(QIcon::fromTheme("settings"), tr("&Preferences"), this);
+    disableAction = new QAction(QIcon::fromTheme("notification-disabled-symbolic"), tr("&Disable autostart"), this);
     quitAction = new QAction(QIcon::fromTheme("gtk-quit"), tr("&Quit"), this);
 
-    connect(aboutAction, &QAction::triggered, this, &MainWindow::on_buttonAbout_clicked);
+    connect(aboutAction, &QAction::triggered, this, &MainWindow::showAbout);
+    connect(disableAction, &QAction::triggered, this, &MainWindow::setDisabled);
     connect(hideAction, &QAction::triggered, qApp, &QGuiApplication::quit);
     connect(lastAlertAction, &QAction::triggered, this, &MainWindow::showLastAlert);
-    connect(preferencesAction, &QAction::triggered, this, &MainWindow::showNormal);
     connect(quitAction, &QAction::triggered, qApp, &QGuiApplication::quit);
 }
 
@@ -276,7 +231,7 @@ void MainWindow::createMenu()
     alertMenu->addSeparator();
     alertMenu->addAction(lastAlertAction);
     alertMenu->addSeparator();
-    alertMenu->addAction(preferencesAction);
+    alertMenu->addAction(disableAction);
     alertMenu->addSeparator();
     alertMenu->addAction(aboutAction);
     alertMenu->addSeparator();
@@ -286,7 +241,7 @@ void MainWindow::createMenu()
     alertIcon->setContextMenu(alertMenu);
 }
 
-void MainWindow::on_buttonAbout_clicked()
+void MainWindow::showAbout()
 {
     QMessageBox msgBox(QMessageBox::NoIcon,
                        tr("About") + " MX Alerts", "<p align=\"center\"><b><h2>MX Alert</h2></b></p><p align=\"center\">" +
@@ -321,14 +276,5 @@ void MainWindow::on_buttonAbout_clicked()
         changelog->setLayout(layout);
         changelog->exec();
     }
-}
-
-void MainWindow::on_buttonApply_clicked()
-{
-    setSchedule(ui->combo_interval->currentText());
-    setTimeout();
-    setDisabled(ui->cb_disable->isChecked());
-    close();
-    QTimer::singleShot(0, qApp, &QGuiApplication::quit);
 }
 

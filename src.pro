@@ -35,8 +35,3 @@ HEADERS += \
 TRANSLATIONS += translations/mx-alerts_es.ts \
                 translations/mx-alerts_fr.ts
 
-FORMS += \
-    mainwindow.ui
-
-RESOURCES += \
-    images.qrc

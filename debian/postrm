@@ -3,12 +3,8 @@ USERS=$(lslogins --noheadings -u -o user | grep -vw root)
 
 for USER in $USERS
 do
-  # Remove user anacron folder if it exists 
-  rm -r /home/$USER/.mx-alerts 2>/dev/null
-
   # Remove user contab entry
   crontab -u $USER -l | sed '\;/usr/bin/mx-alerts.sh;d'  | crontab -u $USER -
-  crontab -u $USER -l | sed '\;${HOME}/.mx-alerts/anacrontab;d'  | crontab -u $USER -
 done
 
 

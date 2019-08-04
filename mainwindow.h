@@ -10,20 +10,12 @@
 #include <QNetworkReply>
 
 #include <version.h>
-#include "ui_mainwindow.h"
-
-namespace Ui {
-class MainWindow;
-}
 
 // struct for outputing both the exit code and the strings when running a command
 struct Output {
     int exit_code;
     QString str;
 };
-
-static int HOUR_M = 60 * 60 * 1000;
-static int DAY_M = HOUR_M * 24;
 
 class MainWindow : public QDialog
 {
@@ -38,12 +30,9 @@ private slots:
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
     void messageClicked();
     void setIcon(QString icon_name);
-    void on_buttonAbout_clicked();
-    void on_buttonApply_clicked();
+    void showAbout();
 
 private:
-    Ui::MainWindow *ui;
-
     bool downloadFile(QUrl url);
     bool showLastAlert();
     bool verifySignature();
@@ -53,9 +42,7 @@ private:
     void createMenu();
     void csleep(int msec);
     void loadSettings();
-    void setDisabled(bool disabled);
-    void setSchedule(QString newTiming);
-    void setTimeout();
+    void setDisabled();
     void showMessage(QString title, QString body, QString fileName);
     void writeFile(QString extension = "");
 
@@ -65,10 +52,10 @@ private:
     QSettings userSettings;
 
     QAction *aboutAction;
+    QAction *disableAction;
     QAction *hideAction;
     QAction *lastAlertAction;
     QAction *lastNewsAction;
-    QAction *preferencesAction;
     QAction *quitAction;
 
     QSystemTrayIcon *alertIcon;
