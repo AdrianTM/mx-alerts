@@ -23,6 +23,7 @@ MainWindow::MainWindow(const QStringList& args) :
     dir.mkdir(tmpFolder);
 
     setIcon("info");
+    release = getCmdOut("lsb_release -rs").str;
 
     if (args.contains("--batch")) { // check for updates and exit when running --batch
         if (!checkUpdates()) {
@@ -69,15 +70,16 @@ void MainWindow::setIcon(QString icon_name)
 
 bool MainWindow::showLastAlert()
 {
+    QString fileName = "alert" + release;
     if (!verifySignature()) {
         qDebug() << "Bad or missing signature";
-        QFile::remove(tmpFolder + "alert");
-        QFile::remove(tmpFolder + "alert.sig");
+        QFile::remove(tmpFolder + fileName);
+        QFile::remove(tmpFolder + fileName + ".sig");
         userSettings.remove("LastAlert");
         return false;
     } else {
         setIcon("messagebox_critical");
-        displayFile("alert");
+        displayFile(fileName);
     }
     return true;
 }
@@ -105,29 +107,56 @@ void MainWindow::loadSettings()
 {
     QSettings settings("/etc/mx-alerts.conf", QSettings::IniFormat);
     server = settings.value("Server").toString();
+    autoStartup = settings.value("AutoStartup").toBool();
 
     // load user settings if present, otherwise use system settings
     server = userSettings.value("Server", server).toString();
+    autoStartup = userSettings.value("AutoStartup", autoStartup).toBool();
+    setEnabled(autoStartup);
 
     qDebug() << "Server" << server;
 }
 
-void MainWindow::setDisabled()
+void MainWindow::toggleDisabled()
 {
-    // remove entries user crontab
-    getCmdOut("crontab -l | sed '\\;/usr/bin/mx-alerts.sh;d'  | crontab -");
-    QTimer::singleShot(0, qApp, &QGuiApplication::quit);
+    if (!autoStartup) {
+        getCmdOut("(crontab -l; echo '0 */5 * * * sleep $(( $(od -N2 -tu2 -An /dev/urandom) \% 3600 )); /usr/bin/mx-alerts.sh') | crontab -");
+        QMessageBox::information(this, tr("Startup enabled"),
+                                 tr("You enabled automatic startup for the alerts program. The program will check priodically for alerts"));
+        setEnabled(true);
+    } else {
+        getCmdOut("crontab -l | sed '\\;/usr/bin/mx-alerts.sh;d'  | crontab -");
+        QMessageBox::information(this, tr("Startup disabled"),
+                                 tr("You disabled automatic startup for the alerts program.\n"
+                                    "Please start the program manually from the menu to check updates."));
+
+        setEnabled(false);
+    }
+    userSettings.setValue("AutoStartup", autoStartup);
 }
 
-void MainWindow::showMessage(QString title, QString body, QString fileName)
+void MainWindow::setEnabled(bool enabled)
 {
-    QSystemTrayIcon::MessageIcon icon = (fileName == "alert") ? QSystemTrayIcon::Critical : QSystemTrayIcon::Information;
-    alertIcon->showMessage(title, body, icon, 0);
+    if (enabled) {
+        toggleDisableAction->setIcon(QIcon::fromTheme("notification-disabled-symbolic"));
+        toggleDisableAction->setText(tr("&Disable autostart"));
+        autoStartup = true;
+    } else {
+        toggleDisableAction->setIcon(QIcon::fromTheme("notification-symbolic"));
+        toggleDisableAction->setText(tr("&Enable autostart"));
+        autoStartup = false;
+    }
+}
+
+void MainWindow::showMessage(QString title, QString body)
+{
+    alertIcon->showMessage(title, body, QSystemTrayIcon::Critical, 0);
 }
 
 void MainWindow::writeFile(QString extension)
 {
-    QFile file(tmpFolder + "alert" + extension);
+    QString fileName = "alert" + release;
+    QFile file(tmpFolder + fileName + extension);
     if (!file.open(QFile::WriteOnly)) {
         qDebug() << "Could not open file:" << file.fileName();
         QTimer::singleShot(0, qApp, &QGuiApplication::quit);
@@ -144,9 +173,10 @@ void MainWindow::messageClicked()
 // check updates and return true if one channel has a notification
 bool MainWindow::checkUpdates()
 {
+    QString fileName = "alert" + release;
     QDateTime lastUpdate = userSettings.value("LastAlert").toDateTime();
     qDebug() << "Last update" <<  lastUpdate;
-    if (!downloadFile(server + "/" + "alert.sig")) return false;
+    if (!downloadFile(server + "/" + fileName + ".sig")) return false;
     qDebug() << "Header time" << reply->header(QNetworkRequest::LastModifiedHeader).toDateTime();
     if (lastUpdate == reply->header(QNetworkRequest::LastModifiedHeader).toDateTime()) {
         qDebug() << "Already up-to-date";
@@ -154,7 +184,7 @@ bool MainWindow::checkUpdates()
     }
     writeFile(".sig");
     userSettings.setValue("LastAlert", reply->header(QNetworkRequest::LastModifiedHeader).toDateTime());
-    if (!downloadFile(server + "/alert")) return false;
+    if (!downloadFile(server + "/" + fileName)) return false;
     writeFile();
 
     return showLastAlert();
@@ -162,7 +192,7 @@ bool MainWindow::checkUpdates()
 
 bool MainWindow::verifySignature()
 {
-    return (getCmdOut("gpg --verify /var/tmp/mx-alerts/alert.sig").exit_code == 0);
+    return (getCmdOut("gpg --verify /var/tmp/mx-alerts/alert" + release + ".sig").exit_code == 0);
 }
 
 bool MainWindow::downloadFile(QUrl url)
@@ -201,7 +231,7 @@ void MainWindow::displayFile(QString fileName)
         if (!title.isEmpty()) {
             alertIcon->show();
             csleep(100);
-            showMessage(title, body, fileName);
+            showMessage(title, body);
         }
     }
     file.close();
@@ -212,11 +242,11 @@ void MainWindow::createActions()
     aboutAction = new QAction(QIcon::fromTheme("help-about"), tr("&About"), this);
     hideAction = new QAction(QIcon::fromTheme("exit"), tr("&Hide until new alerts"), this);
     lastAlertAction = new QAction(QIcon::fromTheme("messagebox_critical"), tr("&Show last alert"), this);
-    disableAction = new QAction(QIcon::fromTheme("notification-disabled-symbolic"), tr("&Disable autostart"), this);
+    toggleDisableAction = new QAction(QIcon::fromTheme("notification-disabled-symbolic"), tr("&Disable autostart"), this);
     quitAction = new QAction(QIcon::fromTheme("gtk-quit"), tr("&Quit"), this);
 
     connect(aboutAction, &QAction::triggered, this, &MainWindow::showAbout);
-    connect(disableAction, &QAction::triggered, this, &MainWindow::setDisabled);
+    connect(toggleDisableAction, &QAction::triggered, this, &MainWindow::toggleDisabled);
     connect(hideAction, &QAction::triggered, qApp, &QGuiApplication::quit);
     connect(lastAlertAction, &QAction::triggered, this, &MainWindow::showLastAlert);
     connect(quitAction, &QAction::triggered, qApp, &QGuiApplication::quit);
@@ -231,7 +261,7 @@ void MainWindow::createMenu()
     alertMenu->addSeparator();
     alertMenu->addAction(lastAlertAction);
     alertMenu->addSeparator();
-    alertMenu->addAction(disableAction);
+    alertMenu->addAction(toggleDisableAction);
     alertMenu->addSeparator();
     alertMenu->addAction(aboutAction);
     alertMenu->addSeparator();

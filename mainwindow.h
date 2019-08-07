@@ -33,6 +33,7 @@ private slots:
     void showAbout();
 
 private:
+    bool autoStartup;
     bool downloadFile(QUrl url);
     bool showLastAlert();
     bool verifySignature();
@@ -42,17 +43,18 @@ private:
     void createMenu();
     void csleep(int msec);
     void loadSettings();
-    void setDisabled();
-    void showMessage(QString title, QString body, QString fileName);
+    void toggleDisabled();
+    void setEnabled(bool enabled);
+    void showMessage(QString title, QString body);
     void writeFile(QString extension = "");
 
-    QString updateInterval;
+    QString release;
     QString server;
     QString tmpFolder = "/var/tmp/mx-alerts/";
     QSettings userSettings;
 
     QAction *aboutAction;
-    QAction *disableAction;
+    QAction *toggleDisableAction;
     QAction *hideAction;
     QAction *lastAlertAction;
     QAction *lastNewsAction;
