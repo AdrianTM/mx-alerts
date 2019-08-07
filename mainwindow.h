@@ -35,10 +35,10 @@ private slots:
 private:
     bool autoStartup;
     bool downloadFile(QUrl url);
-    bool showLastAlert();
+    bool showLastAlert(bool clicked = false);
     bool verifySignature();
 
-    void displayFile(QString fileName);
+    void displayFile(QString fileName, bool clicked = false);
     void createActions();
     void createMenu();
     void csleep(int msec);

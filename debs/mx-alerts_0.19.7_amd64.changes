@@ -18,32 +18,32 @@ Changes:
  .
    * initial release
 Checksums-Sha1:
- b136d2ec4b21118fcebed77eb4013454bff56b98 1111 mx-alerts_0.19.7.dsc
- ad6922ae8f64c0c5d0cdd405da47a006a567df53 20752 mx-alerts_0.19.7.tar.xz
- 6ca5a04cb8eec9ac9ab06649e01f17ef1c2f964d 503012 mx-alerts-dbgsym_0.19.7_amd64.deb
- c3892d8efb93cbd2d51b790384a38c91677d4d0d 11252 mx-alerts_0.19.7_amd64.buildinfo
- a1bd0e7b150fbc28779a840e855f1c679f9813ef 25126 mx-alerts_0.19.7_amd64.deb
+ 439dd7f8b019c67b347611a0e97735f83cbedbab 1111 mx-alerts_0.19.7.dsc
+ 4e48403e06b40b2760630de304b8548d508a8b7d 21136 mx-alerts_0.19.7.tar.xz
+ 116f668c3f47a808d8c01d1938e51557c74506da 509934 mx-alerts-dbgsym_0.19.7_amd64.deb
+ bff0a4107b5dbfe6697038ec1280788c189804a2 11252 mx-alerts_0.19.7_amd64.buildinfo
+ 0239e362fd2842b4100fbc1b4a97c71e8ebcd033 26736 mx-alerts_0.19.7_amd64.deb
 Checksums-Sha256:
- 0ba72446d26b6a094579abf63f513e7509ca6f26d425023bdbec66667a8d1c1e 1111 mx-alerts_0.19.7.dsc
- 72bad6c00d5516607721d2e5ef838c812738ea6a990086bdceac8f60c8f67926 20752 mx-alerts_0.19.7.tar.xz
- e3f482efb6a8f5dd8be2b5b714c62e432d5a8a4a618b76822e2e657464cc386d 503012 mx-alerts-dbgsym_0.19.7_amd64.deb
- 3a77642f270a518e8e8c70bdf4379602165fdffc1afad3bca02809730f2ac408 11252 mx-alerts_0.19.7_amd64.buildinfo
- 926ceb6c6c5646c2c289825aa577886a360f662ad86d5253328518f8453db745 25126 mx-alerts_0.19.7_amd64.deb
+ 3769cf79d3df0966889f10187693f6e9ad4b01517549160522eea964594216c4 1111 mx-alerts_0.19.7.dsc
+ 842659b887383b5246a0091d60c866d5ea0cc7f14bf1f22604e9fdbb5751f0be 21136 mx-alerts_0.19.7.tar.xz
+ ef2dfdbe59884063ecff9217594f40767280755e14c53d5160467747532f3256 509934 mx-alerts-dbgsym_0.19.7_amd64.deb
+ 814c78dcf5cacaccf806bd55adf8c385796e65f3781486b8310c6ed708175e75 11252 mx-alerts_0.19.7_amd64.buildinfo
+ 8af565b99619f788657137e514ed1cd573649f444855fce47025407d49a3d8c7 26736 mx-alerts_0.19.7_amd64.deb
 Files:
- 4848ab3992647c7f511217e785adcf35 1111 admin optional mx-alerts_0.19.7.dsc
- 2e8a8e10e97cedccf187e5bc5ff340a6 20752 admin optional mx-alerts_0.19.7.tar.xz
- d44ad67b2c4675dffc3bbcebba34260e 503012 debug optional mx-alerts-dbgsym_0.19.7_amd64.deb
- 37d6d0d3d4821fbded612e32ab78d97d 11252 admin optional mx-alerts_0.19.7_amd64.buildinfo
- 2006de328b389ef171e7394d50fb3b16 25126 admin optional mx-alerts_0.19.7_amd64.deb
+ 954a7b564801f643d1b710d500c4d2ff 1111 admin optional mx-alerts_0.19.7.dsc
+ 26c401cb91506e78ccdf1a7553e03212 21136 admin optional mx-alerts_0.19.7.tar.xz
+ 35f089b9a8234308ce906aaf9ff4cc63 509934 debug optional mx-alerts-dbgsym_0.19.7_amd64.deb
+ 55b1876caacfe877e31417fe5e1b0a33 11252 admin optional mx-alerts_0.19.7_amd64.buildinfo
+ a2c646998aa24712506c2708951fdeb8 26736 admin optional mx-alerts_0.19.7_amd64.deb
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1IgMsTHGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumNWRB/4giNM+ouMCse3eSSod+0lhXOb6tiDJ
-yOESjkNePOaGeCe6sLp1Lk8MXzZtry0OGxDfF6PrjfO3WcayFEGq+caBgeAcHdXD
-dE2bqv7uyBDr+hiZWH9XbGeNwgrlU59qGmyYlkO2OPN/fVQlbizcxv/gOa/uBuJk
-mkiBJtQIA2M22QO17G34LujBv1eKoVxqLWnKxdYJFAkxfEEUNDGOqlNfk84K0g6g
-wTFulOe+escZmm6707QDYnjU0kpQ4VYGNOUKnZloMthn52hDZTz6XT8xH4e8n18z
-9nMH9+WP2BBZ1pJIuYNBkmKDuI/WjNRKXA4SzYr9P+mnrwZiElsodZbK
-=DQfQ
+iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1LL3cTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumB9RCADVFQwbJjyMgn7DuDJLRdB6cvIvZjpo
+0uKRaFnEUXMv8YOzXg9m7J7YFbZHkOxw+v5lNY43MJpG44bmSx+4SiZr0+C1NL5F
+k7ld5OJzPiEZ+t/WJ7jREuUc0WMqK6qDtmv6vfBv9yaS9/3YAeJnKJ8sP+x5Ixxf
+siAvyK9TDMkF6dFiXsyikUJBoo55vzTCZh9y1yzH5hV1B5ku+8e5H8Flv4N6jOHU
+RxuzS6rYTCmcO1heJyVb37XAb/EpcrsB1LYMEZqnf065VNltMZC2MC7d7s7VsqG5
+fXgA8o8OV78/yjyKeWOAqNAKCWPj/Pq1q8F8eLw1ca0NuMRL7/42yQe9
+=AnPx
 -----END PGP SIGNATURE-----

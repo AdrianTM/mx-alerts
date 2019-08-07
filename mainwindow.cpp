@@ -68,7 +68,7 @@ void MainWindow::setIcon(QString icon_name)
     setWindowIcon(QIcon::fromTheme(icon_name));
 }
 
-bool MainWindow::showLastAlert()
+bool MainWindow::showLastAlert(bool clicked)
 {
     QString fileName = "alert" + release;
     if (!verifySignature()) {
@@ -78,8 +78,10 @@ bool MainWindow::showLastAlert()
         userSettings.remove("LastAlert");
         return false;
     } else {
-        setIcon("messagebox_critical");
-        displayFile(fileName);
+        if (!clicked) {
+            setIcon("messagebox_critical");
+        }
+        displayFile(fileName, clicked);
     }
     return true;
 }
@@ -88,7 +90,7 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason) {
     case QSystemTrayIcon::Trigger:
-        showLastAlert();
+        showLastAlert(true);
         break;
     case QSystemTrayIcon::DoubleClick:
         showNormal();
@@ -167,7 +169,8 @@ void MainWindow::writeFile(QString extension)
 
 void MainWindow::messageClicked()
 {
-    QTimer::singleShot(0, qApp, &QGuiApplication::quit);
+    showLastAlert(true);
+    //QTimer::singleShot(0, qApp, &QGuiApplication::quit);
 }
 
 // check updates and return true if one channel has a notification
@@ -205,7 +208,7 @@ bool MainWindow::downloadFile(QUrl url)
     return (reply->error() == QNetworkReply::NoError);
 }
 
-void MainWindow::displayFile(QString fileName)
+void MainWindow::displayFile(QString fileName, bool clicked)
 {
     bool first = true;
     QString title, body;
@@ -231,7 +234,14 @@ void MainWindow::displayFile(QString fileName)
         if (!title.isEmpty()) {
             alertIcon->show();
             csleep(100);
-            showMessage(title, body);
+            if (clicked) {
+                setIcon("info");
+                QMessageBox::critical(this, tr("MX Alerts") + ": " + title, body +
+                                      "\n---------------------------------------------------------------------------------------\n" +
+                                      getCmdOut("gpg --verify /var/tmp/mx-alerts/alert" + release + ".sig 2>&1 | tail -n1").str);
+            } else {
+                showMessage(title, body);
+            }
         }
     }
     file.close();
@@ -248,7 +258,7 @@ void MainWindow::createActions()
     connect(aboutAction, &QAction::triggered, this, &MainWindow::showAbout);
     connect(toggleDisableAction, &QAction::triggered, this, &MainWindow::toggleDisabled);
     connect(hideAction, &QAction::triggered, qApp, &QGuiApplication::quit);
-    connect(lastAlertAction, &QAction::triggered, this, &MainWindow::showLastAlert);
+    connect(lastAlertAction, &QAction::triggered, this, [=](){this->showLastAlert(true);});
     connect(quitAction, &QAction::triggered, qApp, &QGuiApplication::quit);
 }
 
