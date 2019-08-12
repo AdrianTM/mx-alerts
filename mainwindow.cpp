@@ -23,7 +23,7 @@ MainWindow::MainWindow(const QStringList& args) :
     dir.mkdir(tmpFolder);
 
     setIcon("info");
-    release = getCmdOut("lsb_release -rs").str;
+    release = getCmdOut("grep -oP '(?<=DISTRIB_RELEASE=).*' /etc/lsb-release").str;
 
     if (args.contains("--batch")) { // check for updates and exit when running --batch
         if (!checkUpdates()) {
