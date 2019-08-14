@@ -48,6 +48,9 @@ private:
     void showMessage(QString title, QString body);
     void writeFile(QString extension = "");
 
+    QString getDateInfo();
+    QString getSigInfo();
+
     QString release;
     QString server;
     QString tmpFolder = "/var/tmp/mx-alerts/";
