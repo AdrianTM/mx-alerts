@@ -247,11 +247,10 @@ void MainWindow::displayFile(QString fileName, bool clicked)
             csleep(100);
             if (clicked) {
                 setIcon("info");
-                QMessageBox::critical(this, tr("MX Alerts") + ": " + title, "<b>" + title + "</b>" +
-                                      "<p>" + body +
-                                      "<br>" + "\n---------------------------------------------------------------------------------------\n" +
-                                      "<br>" + tr("Release date/time: %1").arg(getDateInfo()) + "\n" +
-                                      "<br>" + tr("Signature info: %1").arg(getSigInfo()));
+                QMessageBox::critical(this, tr("MX Alerts") + ": " + title, title + "\n" + body + "\n" +
+                                      "---------------------------------------------------------------------------------------\n" +
+                                      tr("Release date/time: %1").arg(getDateInfo()) + "\n" +
+                                      tr("Signature info: %1").arg(getSigInfo()));
             } else {
                 showMessage(title, body);
             }

@@ -12,20 +12,20 @@ Build-Depends: debhelper (>= 9.2), qt5-default, qttools5-dev-tools
 Package-List:
  mx-alerts deb admin optional arch=any
 Checksums-Sha1:
- 1eddd41d97359f2f555cd22d55289701719dd490 21320 mx-alerts_0.19.7.tar.xz
+ 3e785d7dcc0d241972336ede859f28bcaafcf272 21308 mx-alerts_0.19.7.tar.xz
 Checksums-Sha256:
- f655e73d7ec14231a37a9e4b8314daaf06dead2e207b6f858028178ff356275b 21320 mx-alerts_0.19.7.tar.xz
+ 60676c18b765d2845da58e11dd66805bcc030fccca83d4a559a9c89effd092e4 21308 mx-alerts_0.19.7.tar.xz
 Files:
- 98a6413132dcd70a3fe13c84bedc7995 21320 mx-alerts_0.19.7.tar.xz
+ a70f3d3eb7389b2a01b152d6ea6b5d10 21308 mx-alerts_0.19.7.tar.xz
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1UUEMTHGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumKbuCADMt0XTD5roAM+Pw+EqrIsR2N8wVyiY
-wKfQhzv06ydZrmZhaap2KqCao7cEcqX+fp8MkEqq2zlo23v9ZlXj9dC+Azpvy7XR
-zpjUkBlNyw2oO/YMIGFOfypfTtlgDzH8AWAVBtmzXoZ5jgzVZ073CpjQLH+Tn4Ol
-1mv/bRe7rtXD2D2DC4vUtSfQPMn6pfu3AIUL2iuzKtDzFv0KkR0atzbsENh4deXa
-FihiFnhgyTh6Avw9c3/aP7UvuXBzzoO3Ja2LK3Bhwh86bmEjNheB00fj+gjLT6I2
-smDbzb7yuV9lotJIW7mJP8nZJRVvzVMkz0vFU5Jcs5Ok/o9salRqQXjE
-=Jmdv
+iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1UU4UTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumLocB/9ND+upM1ctRAObH31CdpLzLfTlFJZw
+NILoHdftzPk1tG+8ZUlVYNW6i0NilEqHAwplxDs1L2tubyVpLstQyIODIduUNk+x
+Mk0kwvI+5oy3PoVS+Vi0B1LfrfCFDd8LYao65zTIchBJnnDwTFQwHPffm5p8cFZV
+hAnB/ZT45yWognJi+VeMjj/DeODc+vHrjr52pDd6sFeoDJbfsdaqwZ6n85IR2gfG
+Ncq/MEwd6FZJGR7Bw37502dHOr1BKNpUlr2xoW5g21vCLCT14MXitkZWOIShVb5X
+B/GALmgmHrPPlvH1Xvb5QX6rbl5wwbWDJ/24181/Ehi8DW0feqXMSfLw
+=HWyx
 -----END PGP SIGNATURE-----
