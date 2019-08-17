@@ -1,21 +1,22 @@
+ dpkg-buildpackage -rfakeroot -us -uc
+dpkg-buildpackage: info: source package mx-alerts
+dpkg-buildpackage: info: source version 0.19.8
+dpkg-buildpackage: info: source distribution unreleased
+dpkg-buildpackage: info: source changed by Dolphin Oracle <dolphinoracle@gmail.com>
+ dpkg-source --before-build mx-alerts-64
+dpkg-buildpackage: info: host architecture amd64
+ fakeroot debian/rules clean
 dh clean --parallel 
    debian/rules override_dh_auto_clean
-make[1]: Entering directory '/media/dataext/development/working/mx-alerts'
+make[1]: Entering directory '/media/dataext/development/working/mx-alerts-64'
 dh_auto_clean
 rm -f src/translations/*.qm
-make[1]: Leaving directory '/media/dataext/development/working/mx-alerts'
-   dh_clean
+make[1]: Leaving directory '/media/dataext/development/working/mx-alerts-64'
+   dh_clean -O--parallel
+ dpkg-source -b mx-alerts-64
 dpkg-source: info: using source format '3.0 (native)'
 dpkg-source: info: building mx-alerts in mx-alerts_0.19.8.tar.xz
-dpkg-source: info: building mx-alerts in mx-alerts_0.19.8.dsc
-[0mI: Generating source changes file for original dsc[0m
-dpkg-genchanges: info: including full source code in upload
-[0mI: pbuilder: network access will be disabled during build[0m
-[0mI: Current time: Fri Aug 16 19:59:19 EDT 2019[0m
-[0mI: pbuilder-time-stamp: 1565999959[0m
-[0mI: Building the build Environment[0m
-[0mI: extracting base tarball [/media/dataext/development/pbuilder/debian-stretch-i386-base.tgz][0m
-[0mI: copying local configuration[0m
+dpkg-source: info: building mx-alerts in mx-al[0mI: copying local configuration[0m
 [1;33mW: hookdir /media/dataext/development/pbuilder/hook.d/ does not exist, skipping[0m
 [0mI: mounting /proc filesystem[0m
 [0mI: mounting /sys filesystem[0m
@@ -968,6 +969,6 @@ dpkg-buildpackage: info: binary-only upload (no source included)
 [0mI: unmounting proc filesystem[0m
 [0mI: unmounting sys filesystem[0m
 [0mI: cleaning the build env [0m
-[0mI: removing directory /media/dataext/development/pbuilder/build/7298 and its subdirectories[0m
-[0mI: Current time: Fri Aug 16 20:06:57 EDT 2019[0m
-[0mI: pbuilder-time-stamp: 1566000417[0m
+[0mI: removing directory /media/dataext/development/pbuilder/build/4774 and its subdirectories[0m
+[0mI: Current time: Fri Aug 16 20:50:56 EDT 2019[0m
+[0mI: pbuilder-time-stamp: 1566003056[0m

@@ -15,20 +15,20 @@ Changes:
  .
    * added 57mx-alerts for config missed by postinst
 Checksums-Sha1:
- 4b57f2cd0acd23dd00907982dddd158c2455b63d 549 mx-alerts_0.19.8.dsc
- 7912e73c919c251b8e58b8204de839d5e7479e0a 23448 mx-alerts_0.19.8.tar.xz
+ ba8ab0e42b8874c8db4afa653989ff7dafb3f90a 555 mx-alerts_0.19.8.dsc
+ bc4214143e47321867d4def1d2e20b47ca30ed86 1139992 mx-alerts_0.19.8.tar.xz
  a82057d9b890fac292a823aea74a109eaa8814c3 514174 mx-alerts-dbgsym_0.19.8_amd64.deb
- d2051515e5d97c4434a8ae156d546bdd02295a11 10876 mx-alerts_0.19.8_amd64.buildinfo
- 901c828ec9c107ef3224a634dbb88a30b4856603 27902 mx-alerts_0.19.8_amd64.deb
+ 3c67e0670b3741e7a857690b265a5cb9fc31ff9a 10876 mx-alerts_0.19.8_amd64.buildinfo
+ 0b12a3cbae54e5a598fdd8b0904c2c78ca9be88c 27930 mx-alerts_0.19.8_amd64.deb
 Checksums-Sha256:
- 30dd107e00515e83552fe7c8bfc153b0251227b4873272e5969f0329464feb18 549 mx-alerts_0.19.8.dsc
- 09231591f9fad38977b983e2b1ba96a5f985b25350b36c72e7c8561b088fd8b5 23448 mx-alerts_0.19.8.tar.xz
+ e3aaad9c89c41c3bac10241b8db30da20f736198a48966c104e533e7f863a6a8 555 mx-alerts_0.19.8.dsc
+ 6541d7d3d74d91ca87f1ad2baeea2948eff1acef77a3eb4b427bde76f6f6f433 1139992 mx-alerts_0.19.8.tar.xz
  c6b150de8eb520af9f1ea59d1049510d3ed4b59cb6437b114c67dcddb8959bb0 514174 mx-alerts-dbgsym_0.19.8_amd64.deb
- caa341dc7c3190159821b377fcc1d1415da9c74dd6599ae9e72d685f176e46a5 10876 mx-alerts_0.19.8_amd64.buildinfo
- 9a39a8d433812596272a612c8a00bcc6a52c38eef7a6aea7c7a04d2f1765f5af 27902 mx-alerts_0.19.8_amd64.deb
+ 6ef4eba2df4c54b30360cbd51bcf908b84ac0908dbc1f10f2b0ed75b3ba23d66 10876 mx-alerts_0.19.8_amd64.buildinfo
+ 543bcc55db71f2e55d57395a79efc643e1e838dcc3b48b099a2c21fc3a578522 27930 mx-alerts_0.19.8_amd64.deb
 Files:
- ebd3dbb4c3cacef94e8433e423dbedda 549 admin optional mx-alerts_0.19.8.dsc
- d24b607d9fb845fc84820473404791e7 23448 admin optional mx-alerts_0.19.8.tar.xz
+ b94b501d69cae683d07657209305de8d 555 admin optional mx-alerts_0.19.8.dsc
+ cbaad0ecd02306a972aa9e22cb4075ac 1139992 admin optional mx-alerts_0.19.8.tar.xz
  645d44ecd0b83a2e94fbae3d5e3452d3 514174 debug optional mx-alerts-dbgsym_0.19.8_amd64.deb
- b5cba950ed1f4e9e8f6218a4711582d2 10876 admin optional mx-alerts_0.19.8_amd64.buildinfo
- da954492b0f353321c708f47cafcfe03 27902 admin optional mx-alerts_0.19.8_amd64.deb
+ decbeb2263bd92b9b2b7a2a4d1f16f4a 10876 admin optional mx-alerts_0.19.8_amd64.buildinfo
+ a4645a88a270217ad13dcc115f0ab2e7 27930 admin optional mx-alerts_0.19.8_amd64.deb

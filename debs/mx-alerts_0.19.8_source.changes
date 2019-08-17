@@ -15,11 +15,11 @@ Changes:
  .
    * added 57mx-alerts for config missed by postinst
 Checksums-Sha1:
- 7e8c2c6effdf839ce570b9ea9bc7b82b562497ea 549 mx-alerts_0.19.8.dsc
- f19e6c8325ffedcf1b12e6ec0c39b05b1df222ad 23460 mx-alerts_0.19.8.tar.xz
+ 38db4769a06e5d7f7f6b2ae23c16560c01455305 555 mx-alerts_0.19.8.dsc
+ b8d48a139b418c9f582c48fed9866a7cf3c8aeeb 1139992 mx-alerts_0.19.8.tar.xz
 Checksums-Sha256:
- 38751938370911f1b7a44fcf22fa862723de59703cded6be930241bdf0c11df9 549 mx-alerts_0.19.8.dsc
- 0ff510995f3c75eb145472fa601ebabdf78605db182e91653c9f756e1bfbe70a 23460 mx-alerts_0.19.8.tar.xz
+ cf300283f51d63911edc0648dc29280afb6af1622ace51cc3e18134d77acc059 555 mx-alerts_0.19.8.dsc
+ ccb19362541320febf46e69fa5880dcea71d3f2bd4b5aca3321618dda0ff5e3d 1139992 mx-alerts_0.19.8.tar.xz
 Files:
- 257d8edb69d1a70bccf0800f9ed5051a 549 admin optional mx-alerts_0.19.8.dsc
- e3e499a96989e7d16abeaf651249b299 23460 admin optional mx-alerts_0.19.8.tar.xz
+ a3daacc9d5b5be9bc669535699d45746 555 admin optional mx-alerts_0.19.8.dsc
+ 3d27de9128f626e3ac001728d7791fb4 1139992 admin optional mx-alerts_0.19.8.tar.xz
