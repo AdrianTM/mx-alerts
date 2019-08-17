@@ -16,13 +16,13 @@ Changes:
    * added 57mx-alerts for config missed by postinst
 Checksums-Sha1:
  282a6163ccf298a0313173da754bdbc1ccced1cd 507020 mx-alerts-dbgsym_0.19.8_i386.deb
- 7578b42980e869297aa4b1a54236ce2c61824096 9661 mx-alerts_0.19.8_i386.buildinfo
- e3496ebb6e6c6c685266b6a13bc2faec012301fa 29120 mx-alerts_0.19.8_i386.deb
+ 1bff22dd41f81ec2e4a9bdae3d10fee04098af31 9661 mx-alerts_0.19.8_i386.buildinfo
+ e09ae4ba7b38e9e136ca70abd9068d6a0c8f8878 29188 mx-alerts_0.19.8_i386.deb
 Checksums-Sha256:
  58d7002fe3d347edfbb76e2b94753f12be84ea32662efd96dea7c1983f42048a 507020 mx-alerts-dbgsym_0.19.8_i386.deb
- 1f73fdab48e525cb7e0b219f6dd02b7699746b5f5274a37b1ee85b78dffe34e8 9661 mx-alerts_0.19.8_i386.buildinfo
- 7ac7f36bd0ead52ce0cfb1ad7805403ba452ad1cf03a1dae215d81b703f983b6 29120 mx-alerts_0.19.8_i386.deb
+ 7f3a6edf947a8934e1d905f7f7d23bccb42bb784211e83018eba61bac2991364 9661 mx-alerts_0.19.8_i386.buildinfo
+ 40cb1989f82cd1b2fc540d82f39215e84bb347ed8b515743585ee1f0cb9b0728 29188 mx-alerts_0.19.8_i386.deb
 Files:
  9079a695ecaf65e7f12f9bc17bae0a41 507020 debug optional mx-alerts-dbgsym_0.19.8_i386.deb
- c3b6f9391329ccae814e269031f91d7b 9661 admin optional mx-alerts_0.19.8_i386.buildinfo
- 0080683857a84808e3440322c59c71ae 29120 admin optional mx-alerts_0.19.8_i386.deb
+ c3127be9b987fcf68cb86ca70effc7d6 9661 admin optional mx-alerts_0.19.8_i386.buildinfo
+ 6ad7038843a02e52bfc193da3e2b4133 29188 admin optional mx-alerts_0.19.8_i386.deb

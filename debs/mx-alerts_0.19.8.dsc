@@ -9,8 +9,8 @@ Build-Depends: debhelper (>= 9.2), qt5-default, qttools5-dev-tools
 Package-List:
  mx-alerts deb admin optional arch=any
 Checksums-Sha1:
- bc4214143e47321867d4def1d2e20b47ca30ed86 1139992 mx-alerts_0.19.8.tar.xz
+ cbb39ed337aa226b1ab0344958e278f635728b8e 23520 mx-alerts_0.19.8.tar.xz
 Checksums-Sha256:
- 6541d7d3d74d91ca87f1ad2baeea2948eff1acef77a3eb4b427bde76f6f6f433 1139992 mx-alerts_0.19.8.tar.xz
+ b7ee87e8abfff5eb72cc36c770f932835aa505311e90cfa0f04abebed4a19b76 23520 mx-alerts_0.19.8.tar.xz
 Files:
- cbaad0ecd02306a972aa9e22cb4075ac 1139992 mx-alerts_0.19.8.tar.xz
+ 9bb76e097bddc1bc0cae0ae1f5cd14f3 23520 mx-alerts_0.19.8.tar.xz
