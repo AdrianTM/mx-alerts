@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Fri, 16 Aug 2019 19:48:48 -0400
+Source: mx-alerts
+Binary: mx-alerts
+Architecture: source
+Version: 0.19.8
+Distribution: unreleased
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Dolphin Oracle <dolphinoracle@gmail.com>
+Description:
+ mx-alerts  - MX Alerts
+Changes:
+ mx-alerts (0.19.8) unreleased; urgency=medium
+ .
+   * added 57mx-alerts for config missed by postinst
+Checksums-Sha1:
+ 7e8c2c6effdf839ce570b9ea9bc7b82b562497ea 549 mx-alerts_0.19.8.dsc
+ f19e6c8325ffedcf1b12e6ec0c39b05b1df222ad 23460 mx-alerts_0.19.8.tar.xz
+Checksums-Sha256:
+ 38751938370911f1b7a44fcf22fa862723de59703cded6be930241bdf0c11df9 549 mx-alerts_0.19.8.dsc
+ 0ff510995f3c75eb145472fa601ebabdf78605db182e91653c9f756e1bfbe70a 23460 mx-alerts_0.19.8.tar.xz
+Files:
+ 257d8edb69d1a70bccf0800f9ed5051a 549 admin optional mx-alerts_0.19.8.dsc
+ e3e499a96989e7d16abeaf651249b299 23460 admin optional mx-alerts_0.19.8.tar.xz
