@@ -4,20 +4,20 @@ Binary: mx-alerts
 Architecture: amd64 source
 Version: 0.19.8
 Checksums-Md5:
- de8b7638a30c1a8b8648dbd90ab23b42 549 mx-alerts_0.19.8.dsc
+ e55d64547bba5c8467daad93e2607b3d 549 mx-alerts_0.19.8.dsc
  645d44ecd0b83a2e94fbae3d5e3452d3 514174 mx-alerts-dbgsym_0.19.8_amd64.deb
- c3f4248d6be9a0faf458e3259d40b98c 28010 mx-alerts_0.19.8_amd64.deb
+ 08efbdc4b0be539400cb82eab6cf6060 27990 mx-alerts_0.19.8_amd64.deb
 Checksums-Sha1:
- f1eb37f2861eaaf66397e99a575a19c77879b4fa 549 mx-alerts_0.19.8.dsc
+ b72ffe82574a846f0f757a9bf1e6ee4da89924f8 549 mx-alerts_0.19.8.dsc
  a82057d9b890fac292a823aea74a109eaa8814c3 514174 mx-alerts-dbgsym_0.19.8_amd64.deb
- 9331339e53d66a9359912f368cd91eb3088a053a 28010 mx-alerts_0.19.8_amd64.deb
+ 8e8ceb368649675e85bfece34f42634578e3fcf9 27990 mx-alerts_0.19.8_amd64.deb
 Checksums-Sha256:
- 90b499810cbe4194fc2ea0c2639e8468fbbfaeb204899e0ef501a3e1b831c961 549 mx-alerts_0.19.8.dsc
+ 77706ea2891bc5d4528ef596097876104501a3eec924055ffb316ef79e73455f 549 mx-alerts_0.19.8.dsc
  c6b150de8eb520af9f1ea59d1049510d3ed4b59cb6437b114c67dcddb8959bb0 514174 mx-alerts-dbgsym_0.19.8_amd64.deb
- edf72cfcc13f80e06bb71d83c21921c847f544d19bdaf085544a0ec8e40fca1c 28010 mx-alerts_0.19.8_amd64.deb
+ f4692f9c8df69d2b638374ccb359edb1c75df742c88dc28bae1ea7cffbfc13f4 27990 mx-alerts_0.19.8_amd64.deb
 Build-Origin: Debian
 Build-Architecture: amd64
-Build-Date: Sat, 17 Aug 2019 10:09:09 -0400
+Build-Date: Sun, 18 Aug 2019 09:25:37 -0400
 Installed-Build-Depends:
  autoconf (= 2.69-10),
  automake (= 1:1.15-6),
