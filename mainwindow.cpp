@@ -23,7 +23,7 @@ MainWindow::MainWindow(const QStringList& args) :
     dir.mkdir(tmpFolder);
 
     setIcon("info");
-    release = getCmdOut("lsb_release -rs").str;
+    release = getCmdOut("grep -oP '(?<=DISTRIB_RELEASE=).*' /etc/lsb-release").str;
 
     if (args.contains("--batch")) { // check for updates and exit when running --batch
         if (!checkUpdates()) {
@@ -167,6 +167,17 @@ void MainWindow::writeFile(QString extension)
     file.close();
 }
 
+QString MainWindow::getDateInfo()
+{
+   QDateTime lastUpdate = userSettings.value("LastAlert").toDateTime();
+   return lastUpdate.toString("MMM dd yyyy, h:mm:ss ap");
+}
+
+QString MainWindow::getSigInfo()
+{
+    return getCmdOut("gpg --verify /var/tmp/mx-alerts/alert" + release + ".sig 2>&1 | grep 'Good signature from'").str;
+}
+
 void MainWindow::messageClicked()
 {
     showLastAlert(true);
@@ -236,9 +247,10 @@ void MainWindow::displayFile(QString fileName, bool clicked)
             csleep(100);
             if (clicked) {
                 setIcon("info");
-                QMessageBox::critical(this, tr("MX Alerts") + ": " + title, body +
-                                      "\n---------------------------------------------------------------------------------------\n" +
-                                      getCmdOut("gpg --verify /var/tmp/mx-alerts/alert" + release + ".sig 2>&1 | tail -n1").str);
+                QMessageBox::critical(this, tr("MX Alerts") + ": " + title, title + "\n" + body + "\n" +
+                                      "---------------------------------------------------------------------------------------\n" +
+                                      tr("Release date/time: %1").arg(getDateInfo()) + "\n" +
+                                      tr("Signature info: %1").arg(getSigInfo()));
             } else {
                 showMessage(title, body);
             }

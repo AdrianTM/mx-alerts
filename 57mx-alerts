@@ -1,0 +1,16 @@
+#mx-alerts crontab code to add if not present
+#if not present in user's crontab, then add it.
+
+if [ ! -e /home/$USER/.mx-alerts-$USER.chk ]; then
+	if [ -z "$(crontab -l |grep mx-alerts.sh)" ]; then
+		echo '0 */5 * * * sleep $(( $(od -N2 -tu2 -An /dev/urandom) \% 3600 )); /usr/bin/mx-alerts.sh' | crontab -u $USER -
+	fi
+	#touch a chk file so that this command is not added if the user has manually removed it
+		touch /home/$USER/.mx-alerts-$USER.chk
+	#remove demo user chk file if in current user's folder
+		if [ "$USER" != "demo" ]; then
+			if [ -e "/home/$USER/.mx-alerts-demo.chk ]; then
+				rm "/home/$USER/.mx-alerts-demo.chk
+			fi
+		fi
+fi

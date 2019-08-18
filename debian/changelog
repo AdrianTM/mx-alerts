@@ -1,3 +1,9 @@
+mx-alerts (0.19.8) unreleased; urgency=medium
+
+  * added 57mx-alerts for config missed by postinst 
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Fri, 16 Aug 2019 19:48:48 -0400
+
 mx-alerts (0.19.7) mx; urgency=medium
 
   * initial release
