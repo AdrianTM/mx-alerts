@@ -5,3 +5,4 @@ mx-alerts.conf		etc
 mx-alerts.desktop	usr/share/applications
 mx-alerts.sh		usr/bin
 translations/*.qm	usr/share/mx-alerts/locale
+57mx-alerts			etc/X11/Xsession.d
