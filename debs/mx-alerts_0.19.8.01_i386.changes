@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Sun, 18 Aug 2019 18:33:34 -0400
+Source: mx-alerts
+Binary: mx-alerts
+Architecture: i386
+Version: 0.19.8.01
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Dolphin Oracle <dolphinoracle@gmail.com>
+Description:
+ mx-alerts  - MX Alerts
+Changes:
+ mx-alerts (0.19.8.01) mx; urgency=medium
+ .
+   * fixed typo in 57mx-alerts
+Checksums-Sha1:
+ b8a3684dce06fb724504a103977cb4cdbeaa3f06 506988 mx-alerts-dbgsym_0.19.8.01_i386.deb
+ b94b7f3c2561b85b26db716ed324632c9378e533 9685 mx-alerts_0.19.8.01_i386.buildinfo
+ f88700bfdc9ac2fc18b09c76b34d30513f4db16d 29222 mx-alerts_0.19.8.01_i386.deb
+Checksums-Sha256:
+ 47fe0b4146957e5319fcb5f45b4ee69962c694c15a3c9501c536461394b64812 506988 mx-alerts-dbgsym_0.19.8.01_i386.deb
+ ba53dc570e6540f529e9bcc85eac4e5b46442a71d076d182924913d1a3cab711 9685 mx-alerts_0.19.8.01_i386.buildinfo
+ 374dab3863b8e401ab7e8a20d0411af25ab5e049a117a2dd3296dbe3276f3a7c 29222 mx-alerts_0.19.8.01_i386.deb
+Files:
+ 07bd320b19acad7c5a2e59ccf15cecb6 506988 debug optional mx-alerts-dbgsym_0.19.8.01_i386.deb
+ 3b080e3659600fff51a2cb23bc4401b8 9685 admin optional mx-alerts_0.19.8.01_i386.buildinfo
+ 4657acc2766d8047a1d374d0dde29aec 29222 admin optional mx-alerts_0.19.8.01_i386.deb
