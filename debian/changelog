@@ -1,3 +1,9 @@
+mx-alerts (0.19.8.03) mx; urgency=medium
+
+  * gpgv fix
+
+ -- Adrian <adrian@mxlinux.org>  Sat, 24 Aug 2019 11:32:23 -0400
+
 mx-alerts (0.19.8.02) mx; urgency=medium
 
   * added gpgv verification (fehlix) 

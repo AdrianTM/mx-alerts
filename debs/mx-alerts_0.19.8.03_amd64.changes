@@ -1,0 +1,49 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Format: 1.8
+Date: Sat, 24 Aug 2019 11:32:23 -0400
+Source: mx-alerts
+Binary: mx-alerts
+Architecture: source amd64
+Version: 0.19.8.03
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ mx-alerts  - MX Alerts
+Changes:
+ mx-alerts (0.19.8.03) mx; urgency=medium
+ .
+   * gpgv fix
+Checksums-Sha1:
+ 70e116587bdff8f3333582e05c6909e39d230fac 1123 mx-alerts_0.19.8.03.dsc
+ e33a0a0742883d40f585f19f8f8d5b650ba21c9c 21740 mx-alerts_0.19.8.03.tar.xz
+ 8a69caed6319a93a9b936ed871ce213344e41fec 515558 mx-alerts-dbgsym_0.19.8.03_amd64.deb
+ d5bb85637d5d56886eb84ddd4e64bbd478070496 11222 mx-alerts_0.19.8.03_amd64.buildinfo
+ c528f6a9cada5612d91dca9f6ef7ddb93e8d0259 28276 mx-alerts_0.19.8.03_amd64.deb
+Checksums-Sha256:
+ edb5adcc9d35435c64957e5da8d9cf7516c40fc1b89e5c5189935acce6b22b33 1123 mx-alerts_0.19.8.03.dsc
+ b7532e085ef0ca4c4486182e4782cbff55907c804905a61a6d15b110a233718e 21740 mx-alerts_0.19.8.03.tar.xz
+ d87c4543fb41420548956214c519869f4bc6e7afa6910f9f5e0451b8ae6d4445 515558 mx-alerts-dbgsym_0.19.8.03_amd64.deb
+ 4eb8e714b4c03a34f853ddeb9fa0f4fbe55f71e735540880e6993d4f15f68f53 11222 mx-alerts_0.19.8.03_amd64.buildinfo
+ 461162f6cbf92c638d9d36bc67898ec8d64f36e4bdf027d47d8001a73da3d311 28276 mx-alerts_0.19.8.03_amd64.deb
+Files:
+ e4d4b9969893be3d9d0340095910ea7e 1123 admin optional mx-alerts_0.19.8.03.dsc
+ 3b26d35d7fb7a7595e6aee957dd2e854 21740 admin optional mx-alerts_0.19.8.03.tar.xz
+ 3b1f25468fd63151ea5f69bc536310c5 515558 debug optional mx-alerts-dbgsym_0.19.8.03_amd64.deb
+ fe638f7efb1baf34b8f2031b3bc97875 11222 admin optional mx-alerts_0.19.8.03_amd64.buildinfo
+ 63e0eb477e9fe18e21fe74dbb5a2d4d3 28276 admin optional mx-alerts_0.19.8.03_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCAAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAl1hWaATHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumHH8CADJj6hoIT9SZpLg+qLoTejd+pTF2R/9
+qKRXpymbGUXZSz0eIGRkKs3Uc7tp5gnKBxNy5f0tfG4QgG5Tol2XsUutEHRRpLs2
+Ql0C7LVySBg3N3VkLrDet0uymyqlCCCDqvY9/jTFBaeM93nVo119evtyDCngQA9p
+tGqZX4fiGdKNCDidG3SlL62JtaM8+22Zv37RbqWGNLq57WczI3i1P8FWD/ZEx8CT
+XmtoSvgRVMdEp9JZM7qvjsN004f4cFu+Hp6FvV/UPdxf8VzHW7Rtz3a9zqKK855F
+uaMYqj/3BY10Oyuk/sJKe5dXpK6oKJlBca9lDtOf7Gn12Yo9tQVe1E6t
+=U+XN
+-----END PGP SIGNATURE-----

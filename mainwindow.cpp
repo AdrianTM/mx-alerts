@@ -175,7 +175,8 @@ QString MainWindow::getDateInfo()
 
 QString MainWindow::getSigInfo()
 {
-    return getCmdOut("gpg --verify --keyring /usr/share/mx-gpg-keys/mx-gpg-keyring /var/tmp/mx-alerts/alert" + release + ".sig 2>&1 | grep 'Good signature from'").str;
+    return getCmdOut("/usr/bin/gpgv --ignore-time-conflict --keyring /usr/share/mx-gpg-keys/mx-gpg-keyring /var/tmp/mx-alerts/alert" + release +
+                     ".sig /var/tmp/mx-alerts/alert" + release + " 2>&1 | grep 'Good signature from'").str;
 }
 
 void MainWindow::messageClicked()
@@ -206,7 +207,8 @@ bool MainWindow::checkUpdates()
 
 bool MainWindow::verifySignature()
 {
-    return (getCmdOut("/usr/bin/gpgv --ignore-time-conflict --keyring /usr/share/mx-gpg-keys/mx-gpg-keyring.kbx  /var/tmp/mx-alerts/alert" + release + ".sig /var/tmp/mx-alerts/alert" + release).exit_code == 0);
+    return (getCmdOut("/usr/bin/gpgv --ignore-time-conflict --keyring /usr/share/mx-gpg-keys/mx-gpg-keyring  /var/tmp/mx-alerts/alert" + release +
+                      ".sig /var/tmp/mx-alerts/alert" + release).exit_code == 0);
 }
 
 bool MainWindow::downloadFile(QUrl url)
