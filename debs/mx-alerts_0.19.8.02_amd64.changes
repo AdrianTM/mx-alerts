@@ -1,0 +1,34 @@
+Format: 1.8
+Date: Sat, 24 Aug 2019 10:03:08 -0400
+Source: mx-alerts
+Binary: mx-alerts
+Architecture: source amd64
+Version: 0.19.8.02
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Dolphin Oracle <dolphinoracle@gmail.com>
+Description:
+ mx-alerts  - MX Alerts
+Changes:
+ mx-alerts (0.19.8.02) mx; urgency=medium
+ .
+   * added gpgv verification (fehlix)
+Checksums-Sha1:
+ 3b85ba61c61349fa94da62b2c90913cc57bd433d 561 mx-alerts_0.19.8.02.dsc
+ a851ba423905cfe0a357e2a1302f61902b2fbae6 23620 mx-alerts_0.19.8.02.tar.xz
+ 860bb46449e19e43a15e3f253892488fe4354aa0 514498 mx-alerts-dbgsym_0.19.8.02_amd64.deb
+ 86e19eaed8bdf99f319b4852bd9b4f11cbee8f44 10906 mx-alerts_0.19.8.02_amd64.buildinfo
+ a82fd1ae7f44ae267dfc21c96cd73537a0461ff1 28168 mx-alerts_0.19.8.02_amd64.deb
+Checksums-Sha256:
+ 76b573fb215247d462727a3d0b3dffc12385fb5c8e43c8cc2643085a702ea0a6 561 mx-alerts_0.19.8.02.dsc
+ 310d2cefe73aade3b8e16e74698917835d069fd71e99d2f51badd97b9e160a99 23620 mx-alerts_0.19.8.02.tar.xz
+ 77b443102880ea4016e00fa1d22faafbb5afee23d55432f2fcfa90d4370c4740 514498 mx-alerts-dbgsym_0.19.8.02_amd64.deb
+ a34170bcd441776a68a0cddfc6ae983af7606178c1587cceb2734a3aee257444 10906 mx-alerts_0.19.8.02_amd64.buildinfo
+ 68dc7bc913aacd28853b13d2a71ba0d5f5e6210371017ca591eacf18f7bbc7ed 28168 mx-alerts_0.19.8.02_amd64.deb
+Files:
+ 5d63a3cb1e0736dd4a284472ef2f9e0e 561 admin optional mx-alerts_0.19.8.02.dsc
+ 3113a1284a842141ffe93343211af0c0 23620 admin optional mx-alerts_0.19.8.02.tar.xz
+ cef3e2a5a702ce76eed5000b285921f3 514498 debug optional mx-alerts-dbgsym_0.19.8.02_amd64.deb
+ 976e895a6e5cb0ef46c1bdabf76bc7f9 10906 admin optional mx-alerts_0.19.8.02_amd64.buildinfo
+ b99a5da4a1a36d1b549336e01cdd1221 28168 admin optional mx-alerts_0.19.8.02_amd64.deb
