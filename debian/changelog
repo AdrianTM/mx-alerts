@@ -1,3 +1,15 @@
+mx-alerts (0.19.8.02) mx; urgency=medium
+
+  * added gpgv verification (fehlix) 
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Sat, 24 Aug 2019 10:03:08 -0400
+
+mx-alerts (0.19.8.01) mx; urgency=medium
+
+  * fixed typo in 57mx-alerts 
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Sun, 18 Aug 2019 18:33:34 -0400
+
 mx-alerts (0.19.8) unreleased; urgency=medium
 
   * added 57mx-alerts for config missed by postinst 
