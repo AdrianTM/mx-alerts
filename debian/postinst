@@ -6,3 +6,5 @@ for USER in $USERS
 do
   (crontab -u $USER -l; echo '0 */5 * * * sleep $(( $(od -N2 -tu2 -An /dev/urandom) \% 3600 )); /usr/bin/mx-alerts.sh') | crontab -u $USER -
 done
+
+#DEBHELPER#
