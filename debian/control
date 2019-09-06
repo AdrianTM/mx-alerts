@@ -11,7 +11,6 @@ Package: mx-alerts
 Architecture: any
 Depends: anacron,
          cron,
-         gzip,
          xdg-utils | mx-viewer,
          ${misc:Depends},
          ${shlibs:Depends}
