@@ -208,10 +208,20 @@ bool MainWindow::verifySignature()
 
 bool MainWindow::downloadFile(QUrl url)
 {
-    reply = manager.get(QNetworkRequest(url));
+    QNetworkReply *rep = manager.head(QNetworkRequest(url));
     QEventLoop loop;
+    connect(rep, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    QTimer::singleShot(5000, &loop, &QEventLoop::quit); //manager.setTransferTimeout(time) only in Qt >= 5.15
+    loop.exec();
+    qlonglong size = rep->header(QNetworkRequest::ContentLengthHeader).toLongLong();
+    if (size > 4000) {
+        qDebug() << QString("File sizs: %1 too big, won't download it").arg(size);
+        return false;
+    }
+
+    reply = manager.get(QNetworkRequest(url));
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    QTimer::singleShot(5000, &loop, &QEventLoop::quit);
+    QTimer::singleShot(5000, &loop, &QEventLoop::quit); //manager.setTransferTimeout(time) only in Qt >= 5.15
     loop.exec();
     return (reply->error() == QNetworkReply::NoError);
 }
