@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     app.setApplicationVersion(VERSION);
+    app.setOrganizationName("MX-Linux");
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QObject::tr("Displays alerts and urgent notifications from MX Linux team"));

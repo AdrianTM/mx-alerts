@@ -8,16 +8,13 @@
 MainWindow::MainWindow(const QCommandLineParser &arg_parser) :
     userSettings("mx-alerts")
 {
-    timer = new QTimer(this);
-    manager = new QNetworkAccessManager(this);
-
     createActions();
     loadSettings();
     createMenu();
 
     connect(alertIcon, &QSystemTrayIcon::messageClicked, this, &MainWindow::messageClicked);
     connect(alertIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
-    connect(timer, &QTimer::timeout, this, &MainWindow::checkUpdates);
+    connect(&timer, &QTimer::timeout, this, &MainWindow::checkUpdates);
 
     QDir dir;
     dir.mkdir(tmpFolder);
@@ -211,7 +208,7 @@ bool MainWindow::verifySignature()
 
 bool MainWindow::downloadFile(QUrl url)
 {
-    reply = manager->get(QNetworkRequest(url));
+    reply = manager.get(QNetworkRequest(url));
     QEventLoop loop;
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     QTimer::singleShot(5000, &loop, &QEventLoop::quit);
@@ -269,7 +266,7 @@ void MainWindow::createActions()
     connect(aboutAction, &QAction::triggered, this, &MainWindow::showAbout);
     connect(toggleDisableAction, &QAction::triggered, this, &MainWindow::toggleDisabled);
     connect(hideAction, &QAction::triggered, qApp, &QGuiApplication::quit);
-    connect(lastAlertAction, &QAction::triggered, this, [=](){this->showLastAlert(true);});
+    connect(lastAlertAction, &QAction::triggered, this, [this](){showLastAlert(true);});
     connect(quitAction, &QAction::triggered, qApp, &QGuiApplication::quit);
 }
 

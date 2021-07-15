@@ -9,6 +9,7 @@
 #include <QNetworkRequest>
 #include <QSettings>
 #include <QSystemTrayIcon>
+#include <QTimer>
 
 #include <version.h>
 
@@ -67,10 +68,10 @@ private:
     QSystemTrayIcon *alertIcon;
     QMenu *alertMenu;
 
-    QNetworkAccessManager *manager;
+    QNetworkAccessManager manager;
     QNetworkReply *reply;
 
-    QTimer *timer;
+    QTimer timer;
 };
 
 #endif
