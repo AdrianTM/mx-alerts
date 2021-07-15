@@ -1,13 +1,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QCommandLineParser>
 #include <QMenu>
 #include <QMessageBox>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QSettings>
 #include <QSystemTrayIcon>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
 
 #include <version.h>
 
@@ -22,7 +23,7 @@ class MainWindow : public QDialog
     Q_OBJECT
 
 public:
-    MainWindow(const QStringList &args);
+    MainWindow(const QCommandLineParser &arg_parser);
     Output getCmdOut(const QString &cmd);
 
 private slots:

@@ -5,7 +5,7 @@
 
 #include "mainwindow.h"
 
-MainWindow::MainWindow(const QStringList& args) :
+MainWindow::MainWindow(const QCommandLineParser &arg_parser) :
     userSettings("mx-alerts")
 {
     timer = new QTimer(this);
@@ -25,10 +25,9 @@ MainWindow::MainWindow(const QStringList& args) :
     setIcon("info");
     release = getCmdOut("grep -oP '(?<=DISTRIB_RELEASE=).*' /etc/lsb-release").str;
 
-    if (args.contains("--batch")) { // check for updates and exit when running --batch
-        if (!checkUpdates()) {
+    if (arg_parser.isSet("batch")) { // check for updates and exit when running --batch
+        if (!checkUpdates())
             QTimer::singleShot(0, qApp, &QGuiApplication::quit);
-        }
     } else {
         alertIcon->show();
         checkUpdates();
@@ -41,15 +40,13 @@ MainWindow::MainWindow(const QStringList& args) :
 Output MainWindow::getCmdOut(const QString &cmd)
 {
     qDebug() << cmd;
-    QProcess *proc = new QProcess();
+    QProcess proc;
     QEventLoop loop;
-    proc->setReadChannelMode(QProcess::MergedChannels);
-    proc->start("/bin/bash", QStringList() << "-c" << cmd);
-    proc->waitForFinished();
-    qDebug() << "exitCode" << proc->exitCode();
-    Output out = {proc->exitCode(), proc->readAll().trimmed()};
-    delete proc;
-    return out;
+    proc.setReadChannelMode(QProcess::MergedChannels);
+    proc.start("/bin/bash", QStringList() << "-c" << cmd);
+    proc.waitForFinished();
+    qDebug() << "exitCode" << proc.exitCode();
+    return {proc.exitCode(), proc.readAll().trimmed()};
 }
 
 // Custom sleep
@@ -78,9 +75,8 @@ bool MainWindow::showLastAlert(bool clicked)
         userSettings.remove("LastAlert");
         return false;
     } else {
-        if (!clicked) {
+        if (!clicked)
             setIcon("messagebox_critical");
-        }
         displayFile(fileName, clicked);
     }
     return true;
@@ -101,7 +97,7 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
         raise();
         break;
     default:
-        ;
+        break;
     }
 }
 
@@ -122,12 +118,13 @@ void MainWindow::loadSettings()
 void MainWindow::toggleDisabled()
 {
     if (!autoStartup) {
-        getCmdOut("(crontab -l; echo '0 */5 * * * sleep $(( $(od -N2 -tu2 -An /dev/urandom) \% 3600 )); /usr/bin/mx-alerts.sh') | crontab -");
+        getCmdOut("(crontab -l; echo '0 */5 * * * sleep $(( $(od -N2 -tu2 -An /dev/urandom) \\% 3600 )); /usr/bin/mx-alerts.sh') |crontab -");
         QMessageBox::information(this, tr("Startup enabled"),
-                                 tr("You enabled automatic startup for the alerts program. The program will check priodically for alerts"));
+                                 tr("You enabled automatic startup for the alerts program. "
+                                    "The program will check priodically for alerts"));
         setEnabled(true);
     } else {
-        getCmdOut("crontab -l | sed '\\;/usr/bin/mx-alerts.sh;d'  | crontab -");
+        getCmdOut("crontab -l |sed '\\;/usr/bin/mx-alerts.sh;d' |crontab -");
         QMessageBox::information(this, tr("Startup disabled"),
                                  tr("You disabled automatic startup for the alerts program.\n"
                                     "Please start the program manually from the menu to check updates."));
@@ -139,14 +136,13 @@ void MainWindow::toggleDisabled()
 
 void MainWindow::setEnabled(bool enabled)
 {
+    autoStartup = enabled;
     if (enabled) {
         toggleDisableAction->setIcon(QIcon::fromTheme("notification-disabled-symbolic"));
         toggleDisableAction->setText(tr("&Disable autostart"));
-        autoStartup = true;
     } else {
         toggleDisableAction->setIcon(QIcon::fromTheme("notification-symbolic"));
         toggleDisableAction->setText(tr("&Enable autostart"));
-        autoStartup = false;
     }
 }
 
@@ -175,8 +171,9 @@ QString MainWindow::getDateInfo()
 
 QString MainWindow::getSigInfo()
 {
-    return getCmdOut("/usr/bin/gpgv --ignore-time-conflict --keyring /usr/share/mx-gpg-keys/mx-gpg-keyring /var/tmp/mx-alerts/alert" + release +
-                     ".sig /var/tmp/mx-alerts/alert" + release + " 2>&1 | grep 'Good signature from'").str;
+    return getCmdOut("/usr/bin/gpgv --ignore-time-conflict --keyring /usr/share/mx-gpg-keys/mx-gpg-keyring "
+                     "/var/tmp/mx-alerts/alert" + release + ".sig /var/tmp/mx-alerts/alert" + release +
+                     " 2>&1 |grep 'Good signature from'").str;
 }
 
 void MainWindow::messageClicked()
@@ -191,7 +188,8 @@ bool MainWindow::checkUpdates()
     QString fileName = "alert" + release;
     QDateTime lastUpdate = userSettings.value("LastAlert").toDateTime();
     qDebug() << "Last update" <<  lastUpdate;
-    if (!downloadFile(server + "/" + fileName + ".sig")) return false;
+    if (!downloadFile(server + "/" + fileName + ".sig"))
+        return false;
     qDebug() << "Header time" << reply->header(QNetworkRequest::LastModifiedHeader).toDateTime();
     if (lastUpdate == reply->header(QNetworkRequest::LastModifiedHeader).toDateTime()) {
         qDebug() << "Already up-to-date";
@@ -207,8 +205,8 @@ bool MainWindow::checkUpdates()
 
 bool MainWindow::verifySignature()
 {
-    return (getCmdOut("/usr/bin/gpgv --ignore-time-conflict --keyring /usr/share/mx-gpg-keys/mx-gpg-keyring  /var/tmp/mx-alerts/alert" + release +
-                      ".sig /var/tmp/mx-alerts/alert" + release).exit_code == 0);
+    return (getCmdOut("/usr/bin/gpgv --ignore-time-conflict --keyring /usr/share/mx-gpg-keys/mx-gpg-keyring  "
+                      "/var/tmp/mx-alerts/alert" + release + ".sig /var/tmp/mx-alerts/alert" + release).exit_code == 0);
 }
 
 bool MainWindow::downloadFile(QUrl url)
@@ -234,9 +232,8 @@ void MainWindow::displayFile(QString fileName, bool clicked)
         QString line;
         while (!file.atEnd()) {
             line = file.readLine();
-            if (line.startsWith("#") || line.isEmpty() || (first && line == "\n")) {
+            if (line.startsWith("#") || line.isEmpty() || (first && line == "\n"))
                 continue;
-            }
             if (first) {
                 title = line;
                 first = false;
@@ -301,8 +298,8 @@ void MainWindow::showAbout()
                        tr("About") + " MX Alerts", "<p align=\"center\"><b><h2>MX Alert</h2></b></p><p align=\"center\">" +
                        tr("Version: ") + VERSION + "</p><p align=\"center\"><h3>" +
                        tr("Displays alerts and urgent notifications from MX Linux team") +
-                       "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br /></p><p align=\"center\">" +
-                       tr("Copyright (c) MX Linux") + "<br /><br /></p>");
+                       "</h3></p><p align=\"center\"><a href=\"http://mxlinux.org\">http://mxlinux.org</a><br /></p>"
+                       "<p align=\"center\">" + tr("Copyright (c) MX Linux") + "<br /><br /></p>");
     QPushButton *btnLicense = msgBox.addButton(tr("License"), QMessageBox::HelpRole);
     QPushButton *btnChangelog = msgBox.addButton(tr("Changelog"), QMessageBox::HelpRole);
     QPushButton *btnCancel = msgBox.addButton(tr("Cancel"), QMessageBox::NoRole);
@@ -318,7 +315,8 @@ void MainWindow::showAbout()
 
         QTextEdit *text = new QTextEdit;
         text->setReadOnly(true);
-        text->setText(getCmdOut("zless /usr/share/doc/" + QFileInfo(QCoreApplication::applicationFilePath()).fileName()  + "/changelog.gz").str);
+        text->setText(getCmdOut("zless /usr/share/doc/" + QFileInfo(QCoreApplication::applicationFilePath()).fileName()
+                                + "/changelog.gz").str);
 
         QPushButton *btnClose = new QPushButton(tr("&Close"));
         btnClose->setIcon(QIcon::fromTheme("window-close"));
