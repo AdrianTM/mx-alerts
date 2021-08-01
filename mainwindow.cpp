@@ -5,8 +5,7 @@
 
 #include "mainwindow.h"
 
-MainWindow::MainWindow(const QCommandLineParser &arg_parser) :
-    userSettings("mx-alerts")
+MainWindow::MainWindow(const QCommandLineParser &arg_parser)
 {
     createActions();
     loadSettings();
