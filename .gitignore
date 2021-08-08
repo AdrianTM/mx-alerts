@@ -37,3 +37,4 @@ Makefile*
 
 CUSTOMPROGRAMNAME
 mx-alerts
+version.h

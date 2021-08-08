@@ -3,10 +3,13 @@
 #include <QIcon>
 #include <QLibraryInfo>
 #include <QLocale>
+#include <QLockFile>
 #include <QTranslator>
 
 #include "mainwindow.h"
 #include "version.h"
+
+
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +24,8 @@ int main(int argc, char *argv[])
     parser.addOption({{"b", "batch"}, QObject::tr("Run program manually, check for updates and exit.")});
     parser.process(app);
 
-    if (!parser.isSet("batch") && system("ps -C mx-alerts --no-headers |sed -n '2p' |grep mx-alerts") == 0) {
+    QLockFile lockfile("/var/lock/mx-alert.lock");
+    if (!parser.isSet("batch") && !lockfile.tryLock()) {
         qDebug("mx-alerts already running, exiting...");
         return EXIT_FAILURE;
     }
